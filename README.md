@@ -18,6 +18,12 @@ Static Web Apps (one for each environment) and a Managed identity for deployment
 
 ![Actions Variables](gh-actions-vars.png)
 
+### Github Actions Environments
+
+Created QA and Production environments with protection rules
+
+![Environments](gh-actions-environments.png)
+
 ## Content
 
 This repository hosts a basic [Next.js](https://nextjs.org/) application that can consume the
