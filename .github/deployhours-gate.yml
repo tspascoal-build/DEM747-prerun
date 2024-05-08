@@ -1,0 +1,17 @@
+# Are we currently in a lockout? This will reject any deployment regardless of all other conditions
+Lockout: true
+
+# Valid Days
+# "Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"
+# Only needed if you want to override default value
+# Default:
+# DeployDays: ["Monday","Tuesday", "Wednesday", "Thursday", "Friday","Saturday", "Sunday"]
+DeployDays: ["Friday"]
+
+Rules:
+# Leave environment value empty so the rule applies to any environment (if no match for a specific environment is found)
+# Times are in UTC (24H)
+- Environment: production-deploy
+  DeploySlots:
+    - Start: 08:00
+      End:  12:10
