@@ -2,7 +2,7 @@
 
 In this demo we are going to build, test and a deploy a website to Azure (static web app) using GitHub Actions.
 
-Azure resources, authentication for workflows and GitHub repo settings have been pre configured in the interest of time.
+Azure resources, authentication values for workflows (to use with OIDC) and GitHub repo settings have been pre configured in the interest of time.
 
 ## The Application
 
