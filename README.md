@@ -1,4 +1,6 @@
-# Welcome to Microsoft Build DEM747
+# Welcome to Microsoft Build DEM747 - Moving to GitHub Actions
+
+<img src="MSBuild_CursorFinger.gif" alt="msbuild" style="width:100px;width=100px;"/>
 
 In this demo we are going to build, test and a deploy a website to Azure (static web app) using GitHub Actions.
 
