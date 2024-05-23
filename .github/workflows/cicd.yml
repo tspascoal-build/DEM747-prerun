@@ -1,0 +1,76 @@
+name: Build,Lint and Deploy
+
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  build:
+    name: Build and Lint
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+        node_version:
+          - 18
+          - 20
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: ${{ matrix.node_version }}
+            cache: npm
+        - run: npm ci
+        - run: npm run lint
+        - run: npm run build
+  dev:
+    needs: build
+    permissions: 
+      contents: read
+      id-token: write
+
+    uses: tspascoal-build/reusable-workflows/.github/workflows/deploy-static-webapp.yml@v1
+    with:
+      client-id: ${{ vars.AZ_CLIENT_ID }}
+      tenant-id: ${{ vars.ENTRA_TENANT_ID }}
+      subscription-id: ${{ vars.AZ_SUB_ID }}
+      name: build-dem747-prerun-dev
+      environment: dev
+
+  qa:
+    needs: dev
+    permissions: 
+      contents: read
+      id-token: write
+
+    uses: tspascoal-build/reusable-workflows/.github/workflows/deploy-static-webapp.yml@v1
+    with:
+      client-id: ${{ vars.AZ_CLIENT_ID }}
+      tenant-id: ${{ vars.ENTRA_TENANT_ID }}
+      subscription-id: ${{ vars.AZ_SUB_ID }}
+      name: build-dem747-prerun-qa
+      environment: qa
+
+  production:
+    needs: qa
+    permissions: 
+      contents: read
+      id-token: write
+
+    uses: tspascoal-build/reusable-workflows/.github/workflows/deploy-static-webapp.yml@v1
+    with:
+      client-id: ${{ vars.AZ_CLIENT_ID }}
+      tenant-id: ${{ vars.ENTRA_TENANT_ID }}
+      subscription-id: ${{ vars.AZ_SUB_ID }}
+      name: build-dem747-prerun-production
+      environment: production
